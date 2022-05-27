@@ -1,0 +1,74 @@
+{%extends 'main/base.html'%}
+<!--[if IE 8]>This is Home<![endif]-->
+{% block title %}Home{% endblock %}
+<!--[if IE 8]>This is Home<![endif]-->
+{%block content%} {% load static %}
+
+<div class="col-sm-12">
+    <center>
+        <div class="col-sm-12">
+            <h5>
+                <p>Who you are?</p>
+            </h5>
+        </div>
+        <div class="col-sm-12">
+            <a class=" btn btn-primary btn-lg " href="/student/ " role="button " title="for student ">
+                &#x1F393;Student
+            </a>
+            <a class="btn btn-outline-primary btn-lg " href="/loginProf/ " role="button " title="for Professor to change and add student informations ">
+                &#x1F935;Professor(Login)
+            </a>
+            <p>(for Student click on Student for attendance and for Professor login click on Professor button)</p>
+        </div>
+    </center>
+    <div class="col-sm-12" style="padding:20px;background-color: rgb(255, 255, 255);border-radius: 1ex;margin-bottom: 50px;border:2px solid rgb(209, 209, 209)">
+        <div class="alert alert-primary w3-center" role="alert">
+            <h1>Activity List</h1>
+        </div>
+        <div class="col-sm-12" style="display: flex;flex-direction: row-reverse;margin-right: 40px;">
+            <button type="button" class="btn btn-link" id="downloadBtn" onclick="ExportToExcel('xlsx')"><i
+                    class="fa fa-download"></i> Download Entries</button>
+        </div>
+        <input class="form-control" id="myInput1" type="text" placeholder="Search in list..">
+        <br>
+        <table class="table table-bordered table-hover" id="mydata">
+            <thead>
+                <tr>
+                    <th scope="col">Sr. No.</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Entry No.</th>
+                    <th scope="col">Attendance Time</th>
+                </tr>
+            </thead>
+            <tbody id="myTable1">
+                {% for x in students %} {% if x.present%}
+                <tr>
+                    <td class="tableSr"></td>
+                    <td>{{x.name}}</td>
+                    <td>{{x.entry}}</td>
+                    <td>{{x.updated}}</td>
+                </tr>
+                {%endif%} {% endfor %}
+            </tbody>
+        </table>
+        <script>
+            var a = "{{students|length}}";
+            var x = document.getElementsByClassName('tableSr');
+            for (var i = 0; i < a; i++) {
+                x[i].innerHTML = i + 1;
+            }
+        </script>
+    </div>
+    <script type="text/javascript " src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js "></script>
+    <script>
+        $(document).ready(function() {
+            $(" #myInput1 ").on(" keyup ", function() {
+                var value = $(this).val().toLowerCase();
+                $(" #myTable1 tr ").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+</div>
+{%endblock%}

@@ -1,0 +1,122 @@
+{%extends 'main/base.html'%}
+<!--[if IE 8]>This is Home<![endif]-->
+{% block title %}Edit Student{% endblock %}
+<!--[if IE 8]>This is Home<![endif]-->
+{% load crispy_forms_tags %}
+<!--[if IE 8]>Form<![endif]-->
+{%block content%} {% load static %}
+<!--[if IE 8]>Form<![endif]-->
+{% if user.is_authenticated %}
+<center>
+    <div class="col-sm-6">
+        {% for message in messages %}
+        <div class="alert alert-{{message.tags}} alert-dismissible fade show " id="msg{{message.tags}}" role="alert">
+            <strong>{{message}}</strong>
+            <button type="button" class="close" id="close{{message.tags}}" data-dismiss="alert" style="outline: none;" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <script>
+            document.getElementById('close{{message.tags}}').addEventListener('click', () => {
+                document.getElementById('msg{{message.tags}}').style.display = 'none';
+            });
+        </script>
+        {% endfor %}
+    </div>
+</center>
+<div class="col-sm-12" id="Dashboard" style="padding: 50px;padding-top:0 ;">
+    <center>
+        <div style="background-color: rgb(0, 67, 90);padding:50px;border-radius: 1ex;">
+            <h1 style="color:white">Hello,{{username}}</h1>
+            <div>
+                <h6 style="color:white">Here, You can edit the information of {{record.name}}(
+                    <strong style="color:aqua">{{record.entry}}</strong> )
+                </h6>
+            </div>
+        </div>
+    </center>
+</div>
+<div class="col-sm-12" style="padding: 50px;padding-top: 0;">
+    <div class="col-sm-12" style="display: flex;flex-direction:row;flex-wrap:wrap;align-items: center;justify-content: center;margin-bottom: 20px;background-color: rgb(221, 221, 221);border-radius: 2ex;">
+        <div class="col-sm-4" style="padding:20px;">
+            <img src="{% static 'img/digital.jpg' %}" style="width: 100%;border-radius: 2ex;">
+        </div>
+        <div class="col-sm-8" style="padding:20px; ">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <!--[if IE 8]>Form<![endif]-->
+                <div class="form-group">
+                    <label for="name">Name*(<small style="color:red">You can't change name.</small>)</label>
+                    <input type="text" id="name" value="{{record.name}}" name="name" style="cursor: not-allowed;" class="form-control" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="fname">F'Name*</label>
+                    <input type="text" id="fname" value="{{record.fname}}" name="fname" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="entry">Entry Number*</label>
+                    <input type="text" id="entry" value="{{record.entry}}" name="entry" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="gender">Gender*</label>
+                    <select class="form-select" aria-label="Default select example" name="gender">
+                        <option value="Male" {% if Male %}selected{%endif%}>Male</option>
+                        <option value="Female" {% if Female %}selected{%endif%}>Female</option>
+                        <option value="Not Specified" {% if NS %}selected{%endif%}>Not Specified</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="address">Address<strong style="color:red">*</strong>:</label>
+                    <textarea class="form-control" rows="3" id="address" name="address" placeholder="type here.." maxlength="150">{{record.address}}</textarea>
+                    <div style="display: flex;flex-direction: row-reverse;"><small id="maxchar"></small></div>
+                </div>
+                <script>
+                    setInterval(() => {
+                        var c = document.getElementById("address").value;
+                        if (c.length == 150) {
+                            document.getElementById('maxchar').innerHTML = '<strong>Maxmimum limit occured</strong>';
+                            document.getElementById('maxchar').style.color = 'red';
+                        } else {
+                            document.getElementById('maxchar').style.color = 'green';
+                            document.getElementById('maxchar').innerHTML = 150 - c.length;
+                        }
+                    }, 100);
+                </script>
+                <div class="form-group">
+                    <label for="Username">Student Photo(<strong style="color:red">choose other than
+                            existing</strong>)*</label>
+                    <input type="file" id="image" value="{{record.image}}" name="image" sele accept="images/" class="form-control">
+                    <div>(<span style="color:rgb(1, 1, 110)">Already:{{record.image}}</span>)</div>
+                </div>
+                <div class="col-sm-12" style="display: flex;justify-content:center;align-items:center;">
+                    <button type="submit" class="btn btn-success" style="margin:2px">
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square"
+                            fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                            <path fill-rule="evenodd"
+                                d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                        </svg> Save</button>
+                    <button type="reset" class="btn btn-outline-danger" style="margin:2px">
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                            <path fill-rule="evenodd"
+                                d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                        </svg>Cencel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="col-sm-12 ">
+    <center>
+        <span style='font-size:100px;'>&#128577;</span>
+        <strong>
+            <h3 style="color:red ">Access denied!<a href="/home/ ">Click here!</a></h3>
+        </strong>
+    </center>
+</div>
+{%endif%} {%endblock%}

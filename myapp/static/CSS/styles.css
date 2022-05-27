@@ -1,0 +1,224 @@
+.navbar {
+    padding: 20px !important;
+    background-color: rgb(0, 29, 39) !important;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: #ebf2f8 !important;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #160909;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgb(0, 133, 250);
+    border-radius: 2ex;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(0, 174, 255);
+}
+
+.jumbotron {
+    padding: 0 !important;
+}
+
+.main_jam {
+    padding: 40px !important;
+    padding-top: 40px !important;
+    padding-bottom: 40px !important;
+    color: rgb(255, 255, 255);
+    font-weight: bolder !important;
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+    animation: animateBg 14s linear infinite;
+    background-image: linear-gradient( 0deg, #0000005e, #00000053, #0000005b, #0f0f0f3e, #0909091f);
+    background-size: 100% 400%;
+}
+
+@keyframes animateBg {
+    0% {
+        background-position: 0% 0%;
+    }
+    20% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 0% 100%;
+    }
+    70% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 0% 0%;
+    }
+}
+
+#loginCard {
+    border-radius: 2ex;
+    z-index: 1;
+    padding: 40px;
+    background-color: rgb(221, 247, 255);
+    color: rgb(0, 29, 39);
+    box-shadow: 0px 0px 10px rgb(0, 41, 55);
+    margin: 20px;
+    margin-bottom: 40px;
+}
+
+#showtext {
+    border-color: rgb(0, 126, 169);
+}
+
+#showtext:hover {
+    background-color: rgb(0, 29, 39);
+}
+
+.jumbotron {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.Glass {
+    border: none;
+    outline: none;
+    border-radius: 2ex;
+    transition: 0.5s ease;
+    padding: 30px;
+    backdrop-filter: blur(10.5px);
+    -webkit-backdrop-filter: blur(10.5px);
+    margin: 0 !important;
+    background-color: #9f9f9f1c;
+}
+
+.Glass:hover {
+    backdrop-filter: blur(12.3px);
+    -webkit-backdrop-filter: blur(12.3px);
+    background-color: rgba(116, 116, 116, 0.17);
+}
+
+.upBtn {
+    position: fixed;
+    bottom: 5px;
+    right: 5px;
+    background-color: transparent;
+    color: white !important;
+    margin: 30px;
+    z-index: 99999 !important;
+    scroll-behavior: smooth;
+}
+
+.addStudent {
+    background-color: #ffffff;
+    border-radius: 1ex;
+    padding: 20px;
+    border: 1px solid rgba(221, 221, 221, 0.075);
+}
+
+.footer {
+    padding: 30px;
+    margin-top: 50px;
+    background-color: white;
+}
+
+.myTitle {
+    color: rgb(0, 204, 255);
+    -webkit-animation: change-color 8s ease 0s infinite normal;
+    -moz-animation: change-color 8s ease 0s infinite normal;
+    -ms-animation: change-color 8s ease 0s infinite normal;
+    animation: change-color 8s ease 0s infinite normal;
+}
+
+@-webkit-keyframes change-color {
+    0% {
+        color: rgb(0, 208, 255);
+    }
+    30% {
+        color: rgb(251, 0, 255);
+    }
+    60% {
+        color: rgb(212, 255, 0);
+    }
+    80% {
+        color: rgb(0, 255, 149);
+    }
+    100% {
+        color: rgb(0, 208, 255);
+    }
+}
+
+@keyframes change-color {
+    0% {
+        color: rgb(0, 208, 255);
+    }
+    30% {
+        color: rgb(251, 0, 255);
+    }
+    60% {
+        color: rgb(212, 255, 0);
+    }
+    80% {
+        color: rgb(0, 255, 149);
+    }
+    100% {
+        color: rgb(0, 208, 255);
+    }
+}
+
+.fadeIn {
+    -webkit-animation-name: fadeIn;
+    animation-name: fadeIn;
+    -webkit-animation-duration: 0.5s;
+    animation-duration: 0.5s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    animation-timing-function: ease-in-out;
+    -webkit-animation-timing-function: ease-in-out;
+}
+
+@-webkit-keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.dots {
+    width: 40px;
+    height: 9.6px;
+    background: radial-gradient(circle closest-side, #474bff 90%, #0000) 0% 50%, radial-gradient(circle closest-side, #474bff 90%, #0000) 50% 50%, radial-gradient(circle closest-side, #474bff 90%, #0000) 100% 50%;
+    background-size: calc(100% / 3) 100%;
+    background-repeat: no-repeat;
+    animation: dots-zcf63l 1s infinite linear;
+}
+
+@keyframes dots-zcf63l {
+    33% {
+        background-size: calc(100% / 3) 0%, calc(100% / 3) 100%, calc(100% / 3) 100%;
+    }
+    50% {
+        background-size: calc(100% / 3) 100%, calc(100% / 3) 0%, calc(100% / 3) 100%;
+    }
+    66% {
+        background-size: calc(100% / 3) 100%, calc(100% / 3) 100%, calc(100% / 3) 0%;
+    }
+}

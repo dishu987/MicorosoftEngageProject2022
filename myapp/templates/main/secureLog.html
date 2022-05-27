@@ -1,0 +1,248 @@
+{%extends 'main/base.html'%}
+<!--[if IE 8]>This is Home<![endif]-->
+{% block title %}Dashboard{% endblock %}
+<!--[if IE 8]>This is Home<![endif]-->
+{% load crispy_forms_tags %}
+<!--[if IE 8]>Form<![endif]-->
+{%block content%}
+<!--[if IE 8]>Form<![endif]-->
+{% if user.is_authenticated %}
+<center>
+    <div class="col-sm-6">
+        {% for message in messages %}
+        <div class="alert alert-{{message.tags}} alert-dismissible fade show " id="msg{{message.tags}}" role="alert">
+            <strong>{{message}}</strong>
+            <button type="button" class="close" id="close{{message.tags}}" data-dismiss="alert" style="outline: none;" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <script>
+            document.getElementById('close{{message.tags}}').addEventListener('click', () => {
+                document.getElementById('msg{{message.tags}}').style.display = 'none';
+            });
+        </script>
+        {% endfor %}
+    </div>
+</center>
+<div class="col-sm-12" id="Dashboard" style="margin-bottom: 20px;padding: 20px;">
+    <center>
+        <div style="background-color: rgb(0, 67, 90);padding:50px;border-radius: 1ex;">
+            <h1 style="color:white">Hello, {% csrf_token %}{{username}}</h1>
+            <div>
+                <h6 style="color:white">Welcome to Dashboard
+                </h6>
+            </div>
+        </div>
+    </center>
+</div>
+<div class="col-sm-12" style="display: flex;flex-wrap:wrap;margin-top: 20px;margin-bottom: 20px;">
+    <div class="col-sm-4 addStudent" id="addStudent" style="height: fit-content">
+        <center>
+            <h3 style="color: rgb(0, 0, 0);">New Student Registration</h3>
+        </center>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <!--[if IE 8]>Form<![endif]-->
+            <div class="form-group">
+                <label for="name">Name<strong style="color:red">*</strong>:</label>
+                <input type="text" id="name" name="name" class="form-control" placeholder="name..">
+            </div>
+            <div class="form-group">
+                <label for="fname">F'Name<strong style="color:red">*</strong>:</label>
+                <input type="text" id="fname" name="fname" class="form-control" placeholder="father's name..">
+            </div>
+            <div class="form-group">
+                <label for="entry">Entry Number<strong style="color:red">*</strong>:</label>
+                <input type="text" id="entry" name="entry" class="form-control" placeholder="entry number..">
+            </div>
+            <div class="form-group">
+                <label for="gender">Gender<strong style="color:red">*</strong>:</label>
+                <select class="form-select" aria-label="Default select example" name="gender">
+                    <option selected>Open this select gender...</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Not Specified">Not Specified</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="address">Address<strong style="color:red">*</strong>:</label>
+                <textarea class="form-control" rows="3" id="address" name="address" placeholder="type here.." maxlength="150"></textarea>
+                <div style="display: flex;flex-direction: row-reverse;"><small id="maxchar"></small></div>
+            </div>
+            <script>
+                setInterval(() => {
+                    var c = document.getElementById("address").value;
+                    if (c.length == 150) {
+                        document.getElementById('maxchar').innerHTML = '<strong>Maxmimum limit occured</strong>';
+                        document.getElementById('maxchar').style.color = 'red';
+                    } else {
+                        document.getElementById('maxchar').style.color = 'green';
+                        document.getElementById('maxchar').innerHTML = 150 - c.length;
+                    }
+                }, 100);
+            </script>
+            <div class="form-group">
+                <div class="alert alert-warning">
+                    <svg width="2.0625em" height="2em" viewBox="0 0 17 16" class="bi bi-exclamation-triangle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M7.938 2.016a.146.146 0 0 0-.054.057L1.027 13.74a.176.176 0 0 0-.002.183c.016.03.037.05.054.06.015.01.034.017.066.017h13.713a.12.12 0 0 0 .066-.017.163.163 0 0 0 .055-.06.176.176 0 0 0-.003-.183L8.12 2.073a.146.146 0 0 0-.054-.057A.13.13 0 0 0 8.002 2a.13.13 0 0 0-.064.016zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z" />
+                        <path
+                            d="M7.002 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 5.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995z" />
+                    </svg>
+                    <p>Note:</p>
+                    <small>
+                        <ul>
+                            <li>Image should be clear.</li>
+                            <li>Because, It will be use in face recognition in future.</li>
+                            <li>So, make sure it <strong style="color:rgb(19, 0, 125)">latest</strong>.</li>
+                            <li>It should be in <strong style="color:red">*.jpeg</strong> format only.</li>
+                            <li>Rename the image by <strong style="color:rgb(125, 0, 0)">student name</strong> before
+                                uploading.</li>
+                            <li>Image should passport size.</li>
+                        </ul>
+                    </small>
+                    <label for="image">Student Image*</label>
+                    <input type="file" id="image" name="image" style="background-color: rgb(0, 18, 63);color:white;padding: 20px;" accept="images/" class="form-control">
+                </div>
+            </div>
+            <input type="text" name="first" value="first" style="display:none">
+            <center>
+                <button type="submit" class="btn btn-success">Save</button>
+                <button type="reset" class="btn btn-outline-danger">Cencel</button>
+            </center>
+        </form>
+    </div>
+    <script>
+        $(document).ready(function() {
+            $("#myInput").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+                });
+            });
+        });
+    </script>
+    <div class="col-sm-8" style="overflow: auto;margin-left: 0px;border-radius: 1ex;">
+        <div>
+            <div class="form-group">
+                <label for="myInput" style="color:rgb(66, 66, 66)"><strong>Search a Student:</strong></label>
+                <input class="form-control" name="myInput" id="myInput" type="text" placeholder="&#x1F50D by name,father name,address etc..">
+            </div>
+        </div>
+        <div style="display: flex;flex-direction:row-reverse;">
+            <p style="color:rgb(0, 255, 0)"><strong>Present</strong></p>
+            <p><strong> | </strong></p>
+            <p style="color:rgb(255, 0, 0)"><strong>Absent</strong></p>
+        </div>
+        <table class="table table-bordered table-hover" style="border-radius: 1ex;border:1px solid rgb(0, 0, 0)">
+            <thead style=" background-color: rgb(214, 214, 214) ">
+                <tr>
+                    <th>Sr. No.</th>
+                    <th>Name</th>
+                    <th>Entry NO.</th>
+                    <th>Father Name</th>
+                    <th>Gender</th>
+                    <th>Address</th>
+                    <th>Image</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="myTable">
+                {% for x in students %}
+                <tr class="myclass" id="{{x.id}}">
+                    <td class="tableSr " {% if x.present%} style="background-color: rgb(151, 249, 127); " {%else%} style="background-color: rgba(255, 141, 141, 0.999); " {%endif%}></td>
+                    <td>{{x.name}}
+                    </td>
+                    <td>{{x.entry}}</td>
+                    <td>{{x.fname}}</td>
+                    <td>{{x.gender}}</td>
+                    <td>{{x.address}}</td>
+                    <td style="width: 50px; ">
+                        <a href="/{{x.image}} " target="_blank ">
+                            <img src="/{{x.image}} " style="width: 100px; " />
+                        </a>
+                    </td>
+                    <td>
+                        <ul>
+                            <li>
+                                <form method="post" enctype="multipart/form-data ">
+                                    {% csrf_token %}
+                                    <input type="number" name="ID" id="ID" style="display:none" value="{{x.id}}">
+                                    <input type="text" name="second" value="second" style="display:none">
+                                    <button type="submit" class="btn btn-link" style="color:rgb(255, 0, 0)">
+                                        <span style="display: flex;justify-content:center;align-items:center">
+                                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash"
+                                                fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                                <path fill-rule="evenodd"
+                                                    d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                            </svg> Delete
+                                        </span></button>
+
+                                </form>
+                            </li>
+                            <li>
+                                <form method="post" enctype="multipart/form-data ">
+                                    {% csrf_token %}
+                                    <input type="number" name="ID1" id="ID1" style="display:none" value="{{x.id}}">
+                                    <input type="text" name="third" value="third" style="display:none">
+                                    <button type="submit" class="btn btn-link" style="color:rgb(0, 123, 255)">
+                                        <span style="display: flex;justify-content:center;align-items:center">
+                                            <svg width="1em" height="1em" viewBox="0 0 16 16"
+                                                class="bi bi-pencil-square" fill="currentColor"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                                <path fill-rule="evenodd"
+                                                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                            </svg> Edit
+                                        </span>
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                    </td>
+                    {%if x.present%}
+                    <td hidden>Present</td>
+                    {%else%}
+                    <td hidden>Absent</td>
+                    {%endif%}
+                </tr>
+                {% endfor %}
+                <script>
+                    var a = "{{students|length}} ";
+                    var x = document.getElementsByClassName('tableSr');
+                    for (var i = 0; i < a; i++) {
+                        x[i].innerHTML = i + 1;
+                    }
+                </script>
+            </tbody>
+        </table>
+        <div class="col-sm-12" style="display: flex;align-items:center;justify-content:center;">
+            <form method="post">
+                {% csrf_token %}
+                <input type="text" name="forth" value="forth" style="display:none">
+                <button class="btn btn-outline-danger btn-lg " type="submit" title="delete all entries">
+                    <span style="display: flex;justify-content:center;align-items:center"><svg width="1em" height="1em"
+                            viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                            <path fill-rule="evenodd"
+                                d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                        </svg>Reset Entries</span>
+                </button>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="col-sm-12 ">
+    <center>
+        <span style='font-size:100px;'>&#128577;</span>
+        <strong>
+            <h3 style="color:red ">Access denied!<a href="/home/ ">Click here!</a></h3>
+        </strong>
+    </center>
+</div>
+{%endif%} {%endblock%}

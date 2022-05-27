@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{% block title %}My App {% endblock %}</title>
+    <link rel="icon" href="{% static 'CSS/title-logo.png' %}" type="image/x-icon">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!--[if IE 8]>This is Static<![endif]-->
+    <link rel="stylesheet" href="{% static 'CSS/styles.css' %}">
+    <script src="{% static 'JS/script.js' %}"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<style>
+    .navbar-brand {
+        color: rgb(0, 217, 255) !important;
+        transition: 0.5s ease;
+    }
+    
+    .navbar-brand:hover {
+        text-decoration: underline;
+        color: aqua !important;
+    }
+    
+    .text {
+        background-image: linear-gradient(360deg, transparent 0%, transparent 95%, rgb(7, 168, 255) 90%, rgb(0, 191, 255) 100%);
+        background-repeat: no-repeat;
+        background-size: 0% 100%;
+        background-position-x: right;
+        transition: background-size 500ms;
+    }
+    
+    .text:hover {
+        background-size: 100% 100%;
+        background-position-x: left;
+    }
+    
+    .nav-link {
+        transition: 500ms ease;
+    }
+    
+    .nav-link:hover {
+        color: rgb(7, 168, 255) !important;
+        text-shadow: 0px 0px 10px #00d5ff !important;
+    }
+    
+    .scanner {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .scanner .fingarprint {
+        position: relative;
+        width: 300px;
+        height: 300px;
+        background: url("{% static 'img/face1.png'%}");
+        background-size: 300px;
+    }
+    
+    .scanner .fingarprint::before {
+        content: "";
+        position: absolute;
+        top: 0%;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url("{% static 'img/face2.png'%}");
+        background-size: 300px;
+        animation: animate 4s ease-in-out infinite;
+    }
+    
+    @keyframes animate {
+        0%,
+        100% {
+            height: 0%;
+        }
+        50% {
+            height: 100%;
+        }
+    }
+    
+    .scanner .fingarprint::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 8px;
+        background: #3fefef;
+        border-radius: 8px;
+        filter: drop-shadow(0 0 20px #3fefef) drop-shadow(0 0 60px #3fefef);
+        animation: animate_line 4s ease-in-out infinite;
+    }
+    
+    @keyframes animate_line {
+        0%,
+        100% {
+            top: 0%;
+        }
+        50% {
+            top: 100%;
+        }
+    }
+    
+    .scanner h3 {
+        text-transform: uppercase;
+        font-size: 2em;
+        letter-spacing: 2px;
+        margin-top: 20px;
+        color: #3fefef;
+        filter: drop-shadow(0 0 20px #3fefef) drop-shadow(0 0 60px #3fefef);
+        opacity: 0;
+        animation: animate_text 0.5s steps(1) infinite;
+    }
+    
+    @keyframes animate_text {
+        0%,
+        100% {
+            opacity: 0;
+        }
+        50% {
+            opacity: 1;
+        }
+    }
+    
+    .scanner1 {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .scanner1 .fingarprint1 {
+        position: relative;
+        width: 300px;
+        height: 300px;
+        background: url("{% static 'img/face1.png'%}");
+        background-size: 300px;
+    }
+    
+    .scanner1 .fingarprint1::before {
+        content: "";
+        position: absolute;
+        top: 0%;
+        left: 0;
+        width: 100%;
+        height: 70%;
+        background: url("{% static 'img/face2.png'%}");
+        background-size: 300px;
+    }
+    
+    .scanner1 .fingarprint1::after {
+        content: "";
+        position: absolute;
+        top: 70%;
+        left: 0;
+        width: 100%;
+        height: 8px;
+        background: #3fefef;
+        border-radius: 8px;
+        filter: drop-shadow(0 0 20px #3fefef) drop-shadow(0 0 60px #3fefef);
+    }
+</style>
+
+<body>
+    <div class="sm-col-12">
+        <nav class="navbar navbar-expand-lg navbar-light ">
+            <div class="container-fluid ">
+                <a class="navbar-brand " href="/loginProf/ " style="color:white ">
+                    <h5><i class="fa fa-user "></i>{{ nav2 }}</h5>
+                </a>
+                <button class="navbar-toggler " style="background-color:rgb(1, 167, 244);outline: none; " type="button " style="color:white " data-bs-toggle="collapse " data-bs-target="#navbarNavDropdown " aria-controls="navbarNavDropdown " aria-expanded="false " aria-label="Toggle navigation ">
+                    <span class="navbar-toggler-icon "></span>
+                </button>
+                <div class="collapse navbar-collapse " id="navbarNavDropdown ">
+                    <ul class="navbar-nav ">
+                        {% if temp %}
+                        <li class="nav-item ">
+                            <a class="navbar-brand " href="/signout/ " style="color:white ">
+                                <h5>Logout({{ username }})</h5>
+                            </a>
+                            <li class="nav-item text ">
+                                <a class="nav-link " aria-current="page " href="/secureLog/ " style="color:white ">
+                                Dashboard</a>
+                            </li>
+                            <li class="nav-item text ">
+                                <a class="nav-link " aria-current="page " href="#addStudent " style="color:white ">
+                                Add Student</a>
+                            </li>
+                            <li class="nav-item text ">
+                                <a class="nav-link " href="#contact " style="color:white ">
+                                Contact</a>
+                            </li>
+                        </li>
+                        {%else%}
+                        <li class="nav-item text ">
+                            <a class="nav-link " aria-current="page " href="/home/ " style="color:white ">Home</a>
+                        </li>
+                        <li class="nav-item text ">
+                            <a class="nav-link " href="/register/ " style="color:white ">
+                                Register</a>
+                        </li>
+                        <li class="nav-item text ">
+                            <a class="nav-link " href="https://acehacker.com/microsoft/engage2022/ " style="color:white ">Engage2022</a>
+                        </li>
+                        <li class="nav-item text ">
+                            <a class="nav-link " href="/manual/ " style="color:white ">
+                                User Manual</a>
+                        </li>
+                        <li class="nav-item text ">
+                            <a class="nav-link " href="#contact " style="color:white ">
+                                Contact</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="jumbotron " style="background-image: url( '/static/img/tech1.jpg') ">
+        <div class="col-sm-12 main_jam ">
+            <center>
+                <div class="col-sm-12 Glass ">
+                    <h1 class="display-4 myTitle mn ">Microsoft Engage Project</h1>
+                    <p class="lead ">This is web based application for tracking attendance of students in a class or library.
+                    </p>
+                    <hr class="my-4 " style="background-color:rgb(0, 200, 255) ">
+                    <p>This is based on face-recognition method made in <strong style="color: rgb(0, 174, 255); ">
+                            Django,
+                            HTML, CSS,
+                            JQuery,Party.js and
+                            Bootstrap.
+                        </strong>
+                    </p>
+                    <a class="btn btn-outline-info btn-lg" id="showtext" role="button">More</a>
+                    <div class="sm-col-12 " id="texttoShow" style="display:none; ">
+                        <p class="lead ">Face Recognition Api's - OpenCv and face-recognition python libraries.</p>
+                        <hr class="my-4 " style="background-color:rgb(0, 200, 255) ">
+                        <p>In this professor can register and delete employees information and students can track Attendance.
+                        </p>
+                    </div>
+                </div>
+            </center>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function() {
+            $("#showtext").click(function() {
+                $("#texttoShow").slideToggle("slow");
+            });
+        });
+    </script>
+    <div class="content fadeIn " id="content ">
+        {%block content%} {%endblock%}
+    </div>
+    <div class="cok-sm-12 upBtn ">
+        <a class="btn btn-outline-danger btn-lg " id="showtext " href="# " role="button "><b>^</b></a>
+    </div>
+    <div class="col-sm-12 " style="background-color:rgb(0, 29, 39) ">
+        <center>
+            <div class="w3-padding-64 w3-content w3-text-grey " id="contact ">
+                <h2 style="color:rgb(21, 121, 252) ">Contact</h2>
+                <hr class="my-4 " style="background-color:rgb(21, 121, 252) ">
+                <div class="col-sm-12 ">
+                    <div class="col-sm-4 ">
+                        <p>From: IIT Ropar, Punjab
+                        </p>
+                    </div>
+                    <div class="col-sm-4 ">
+                        <p> Phone: +91 9992115079
+                        </p>
+                    </div>
+                    <div class="col-sm-4 ">
+                        <p>Email: 2020eeb1167@iitrpr.ac.in
+                        </p>
+                    </div>
+                </div>
+                <div class="col-sm-12 w3-content w3-text-grey w3-xlarge ">
+                    <a class="fa fa-instagram w3-hover-opacity " href="https://www.instagram.com/dishuatkan007/?hl=bg " target="_blank "></a>
+                    <a class="fa fa-linkedin w3-hover-opacity " href="https://www.linkedin.com/in/dishant-531236213 " target="_blank "></a>
+                    <a class="fa fa-github-square w3-hover-opacity " href="https://github.com/dishu987 " target="_blank "></a>
+                </div>
+        </center>
+        </div>
+    </div>
+    <script>
+        setInterval(() => {
+            const tmp = document.querySelector('.mn');
+            party.confetti(tmp, {
+                count: party.variation.range(0, 30),
+                size: party.variation.range(0.1, 1),
+            });
+        }, 2000);
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/party-js@latest/bundle/party.min.js "></script>
+</body>
+
+</html>

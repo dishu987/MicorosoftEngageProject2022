@@ -1,0 +1,38 @@
+{% extends 'main/base.html' %}
+<!--[if IE 8]>This is Title<![endif]-->
+{% block title %}Create Account{% endblock %}
+<!--[if IE 8]>This is Crispy<![endif]-->
+{% load crispy_forms_tags %}
+<!--[if IE 8]>This is Content<![endif]-->
+{% block content %}
+<marquee direction="left">Fill to form to become user of admin dashboard.</marquee>
+<div class="col-sm-12">
+    <center>
+        <h3><b>Do you want to become Admin?</b></h3>
+        <h6>Then you can register here...</h6>
+        <div class="col-sm-6">
+            {% for message in messages %}
+            <div class="alert alert-{{message.tags}} alert-dismissible fade show " id="msg{{message.tags}}" role="alert">
+                <strong>{{message}}</strong>
+                <button type="button" class="close" id="close{{message.tags}}" data-dismiss="alert" style="outline: none;" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <script>
+                document.getElementById('close{{message.tags}}').addEventListener('click', () => {
+                    document.getElementById('msg{{message.tags}}').style.display = 'none';
+                });
+            </script>
+            {% endfor %}
+        </div>
+    </center>
+    <div class="col-sm-12" style="padding:30px;display:flex;justify-content: center;">
+        <div class="col-sm-8">
+            <form method="post" class="form-group">
+                {% csrf_token %} {{form|crispy}}
+                <button type="submit" class="btn btn-success">Register</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

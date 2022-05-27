@@ -1,0 +1,63 @@
+{%extends 'main/base.html'%}
+<!--[if IE 8]>This is Home<![endif]-->
+{% block title %}Attendance{% endblock %}
+<!--[if IE 8]>This is Home<![endif]-->
+{%block content%} {% load static %}
+
+<div class="jumbotron jumbotron-fluid" style="margin: 50px;margin-right: 50px;margin-bottom: 80px;margin-top: 80px;background-color:rgba(105, 105, 105, 0);">
+    <div class="container" style="padding:50px;background-color: rgb(0, 79, 111);border-radius:2ex">
+        <div class="col-sm-12" style="display: flex;flex-direction:row;justify-content: center;align-items: center;">
+            <div class="col-sm-6">
+                <div class="col-sm-12">
+                    <div class="scanner" id="scan2" style="display: none;">
+                        <div class="fingarprint">
+                        </div>
+                        <h3>Running ....</h3>
+                    </div>
+                    <div class="scanner1" id="scan1">
+                        <div class="fingarprint1">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="alert alert-warning" style="margin-bottom:40px;margin-top:40px;padding: 20px;border-radius: 2ex;">
+                    <svg width="2.0625em" height="2em" viewBox="0 0 17 16" class="bi bi-exclamation-triangle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M7.938 2.016a.146.146 0 0 0-.054.057L1.027 13.74a.176.176 0 0 0-.002.183c.016.03.037.05.054.06.015.01.034.017.066.017h13.713a.12.12 0 0 0 .066-.017.163.163 0 0 0 .055-.06.176.176 0 0 0-.003-.183L8.12 2.073a.146.146 0 0 0-.054-.057A.13.13 0 0 0 8.002 2a.13.13 0 0 0-.064.016zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z" />
+                        <path
+                            d="M7.002 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 5.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995z" />
+                    </svg>
+                    <p><b>Note: </b>
+                        <ul>
+                            <li>It takes some time to turn on the scanner if your computer hardware does not meet the requirements of the face recognition software.</li>
+                            <li>consider providing good lighting and good resolution cameras for the software to work properly.
+                            </li>
+                            <li>While Scanning do not move yours face.</li>
+                            <li>For Close the camera window press q on keyboard.</li>
+                        </ul>
+                        <small>(after scanning completed go to home to see Activity)</small>
+                    </p>
+                    <a href="/scan/" style="color:white;text-decoration: none;">
+                        <button type="button" class="btn btn-primary btn-lg btn-block" id="scan" style="border-radius: 5ex;color:aliceblue">
+                            Run Scanner
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function() {
+            $("#scan").on("click", function() {
+                const tmp = document.getElementById('scan');
+                $('#scan2').show();
+                $('#scan1').hide();
+                tmp.disabled = true;
+                tmp.innerHTML = "Running...";
+                tmp.style.cursor = "not-allowed";
+            });
+        });
+    </script>
+</div>
+{%endblock%}
