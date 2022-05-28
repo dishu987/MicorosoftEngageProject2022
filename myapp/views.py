@@ -14,7 +14,7 @@ from datetime import datetime
 from django.utils import timezone
 import os
 # Create your views here.
-
+#This is function for Encoding Sensitive URL Information
 def Enc(num):
     data = str(num)
     # conversion Chart
@@ -32,6 +32,7 @@ def Enc(num):
 
         # Printing converted output
     return converted_data
+#This is function for Decoding Sensitive URL Information
 def Dec(MSG):
     conversion_code = {
 	    #numbers
@@ -47,6 +48,7 @@ def Dec(MSG):
         # Printing converted output
     return converted_data
 
+#Student Page(Scanner Page)
 def student(response):
     context = {
         'username':response.user.username,
@@ -55,6 +57,7 @@ def student(response):
     }
     return render(response,"main/student.html",context)
 
+#This is manual page
 def manual(response):
     context = {
         'username':response.user.username,
@@ -62,7 +65,7 @@ def manual(response):
         'nav2' : 'Sign Up',
     }
     return render(response,"main/manual.html",context)
-
+#home page
 def home(response):
     logout(response)
     students = StudentName.objects.filter(present=True).order_by('updated').reverse()
@@ -82,6 +85,7 @@ def home(response):
         context["students"] = students
     return render(response, "main/home.html",context)
 
+#this is secure professor deshboar panel
 def secureLog(request):
     students = StudentName.objects.all().values()
     if request.method == "POST":
@@ -119,6 +123,7 @@ def secureLog(request):
     }
     return render(request, 'main/secureLog.html',context)
 
+#this is login page for professor
 def loginProf(request):
     temp = False
     logout(request)
@@ -155,22 +160,25 @@ def loginProf(request):
         context["nav2"] = f"Logout ({request.user.username})"
         context["link2"] = "loginProf"
     return render(request, "main/loginProf.html",context)
-
+#signout page
 def signout(request):
     logout(request)
     return redirect('home')
 
-#scanning
+#Core : Using OpenCV-py and Face-recognition-py
 def scan(request):
     known_face_encodings = []
     known_face_names = []
+    #get all students objects informations
     profiles = StudentName.objects.all()
+    #add name of student and image encodings in containers...
     for profile in profiles:
         person = profile.image
         image_of_person = face_recognition.load_image_file(f'media/{person}')
         person_face_encoding = face_recognition.face_encodings(image_of_person)[0]
         known_face_encodings.append(person_face_encoding)
         known_face_names.append(f'{person}'[:-4])
+    #capture video from camera of by help of OpenCV-py
     video_capture = cv2.VideoCapture(0)
     face_locations = []
     face_encodings = []
@@ -187,25 +195,31 @@ def scan(request):
                 rgb_small_frame, face_locations)
 
             face_names = []
+	    
             for face_encoding in face_encodings:
                 matches = face_recognition.compare_faces(
                     known_face_encodings, face_encoding)
                 name = "Unknown"
-
+		
                 face_distances = face_recognition.face_distance(
                     known_face_encodings, face_encoding)
                 best_match_index = np.argmin(face_distances)
+		#if face encodings matches with camera image encodings
                 if matches[best_match_index]:
                     name = known_face_names[best_match_index]
                     profile = StudentName.objects.get(Q(image__icontains=name))
+	            #name variable is equal to that student name(it will be use to dispay on camera window)
                     name = profile.name
+		    #make attendance true of that student
                     profile.present = True
+		    #set time
                     profile.updated = timezone.now()
+		    #save object
                     profile.save()
                 face_names.append(name)
 
         process_this_frame = not process_this_frame
-
+	#show name on camera window
         for (top, right, bottom, left), name in zip(face_locations, face_names):
             top *= 4
             right *= 4
@@ -221,7 +235,7 @@ def scan(request):
                         font, 0.5, (255, 255, 255), 1)
 
         cv2.imshow('Face-Recognition', frame)
-
+	#if press q then camera window will close
         if cv2.waitKey(1) == ord('q'):
             break
 
@@ -229,9 +243,13 @@ def scan(request):
     cv2.destroyAllWindows()
     return redirect('home')
 
+#this is edit page
 def edit(request,id):
+    #first decode id from url
     ID = Dec(id)
+    #convert into decimal
     ID1 = int(ID,10)
+    #get that student by id
     record = StudentName.objects.get(id = ID1)
     if request.method == "POST":
         submitted_form = studentRegistration(request.POST, request.FILES,instance=record)
