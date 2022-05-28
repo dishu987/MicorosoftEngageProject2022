@@ -23,7 +23,7 @@
 
 ## 3. How to run?
 
-    -->pip install -r reqirement.txt
+    -->pip install -r requirement.txt
     -->py manage.py makemigrations
     -->py manage.py migrate
     -->py manage.py runserver
