@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-sdc!fhyuc$(oho#_wbhx1tvkcw&k69pahk&gw1v8a_m2bv+#^e
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1','fr-attendance-system.herokuapp.com/']
 
 
 # Application definition
