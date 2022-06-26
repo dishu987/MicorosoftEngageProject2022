@@ -7,32 +7,32 @@
 {%block content%}
 <!--[if IE 8]>Form<![endif]-->
 {% if user.is_authenticated %}
-<center>
-    <div class="col-sm-6">
-        {% for message in messages %}
-        <div class="alert alert-{{message.tags}} alert-dismissible fade show " id="msg{{message.tags}}" role="alert">
-            <strong>{{message}}</strong>
-            <button type="button" class="close" id="close{{message.tags}}" data-dismiss="alert" style="outline: none;" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <script>
-            document.getElementById('close{{message.tags}}').addEventListener('click', () => {
-                document.getElementById('msg{{message.tags}}').style.display = 'none';
-            });
-        </script>
-        {% endfor %}
-    </div>
-</center>
+
 <div class="col-sm-12" id="Dashboard" style="margin-bottom: 20px;padding: 20px;">
     <center>
-        <div style="background-color: rgb(0, 67, 90);padding:50px;border-radius: 1ex;">
-            <h1 style="color:white">Hello, {% csrf_token %}{{username}}</h1>
-            <div>
-                <h6 style="color:white">Welcome to Dashboard
-                </h6>
+        <div class="col-sm-6">
+            {% for message in messages %}
+            <div class="alert alert-{{message.tags}} alert-dismissible fade show " id="msg{{message.tags}}" role="alert">
+                <strong>{{message}}</strong>
+                <button type="button" class="close" id="close{{message.tags}}" data-dismiss="alert" style="outline: none;" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
+            <script>
+                document.getElementById('close{{message.tags}}').addEventListener('click', () => {
+                    document.getElementById('msg{{message.tags}}').style.display = 'none';
+                });
+            </script>
+            {% endfor %}
         </div>
+    </center>
+    <div style="background-color: rgb(0, 67, 90);padding:50px;border-radius: 1ex;">
+        <h1 style="color:white">Hello, {% csrf_token %}{{username}}</h1>
+        <div>
+            <h6 style="color:white">Welcome to Dashboard
+            </h6>
+        </div>
+    </div>
     </center>
 </div>
 <div class="col-sm-12" style="display: flex;flex-wrap:wrap;margin-top: 20px;margin-bottom: 20px;">
